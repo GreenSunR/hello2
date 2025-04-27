@@ -1,21 +1,68 @@
+library(readr)
+library(dplyr)
+
+url <- "https://yoursdearboy.github.io/git-101/data/imdb250.csv"
+
+httr::GET(url, httr::write_disk("imdb.csv", overwrite = T))
+
+top <- read_csv("imdb.csv")
+
+top100 <- top |>
+  group_by(year) |>
+  filter(row_number() <= 100) |>
+  ungroup()
+
+write_csv(top100, "imdb.csv")
+
+Вы 12:53
++
+
+Елена Денисова 12:54
++
+
+Екатерина 12:54
++
+
+Екатерина 12:58
+Все ок
+
+Kirill Voronin 13:01
 ---
 title: "Hello"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
+library(readr)
+library(dplyr)
+
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r}
-set.seed(99)
+top <- read_csv("imdb.csv")
+head(top)
+```
+
+```{r}
+modern <- top |>
+  filter(year >= 2000)
+head(modern)
+```
+
+```{r}
+set.seed(37)
 xs <- sample(1:250, 25)
 xs
 ```
 
 ```{r}
 me <- median(xs)
-me
 ```
 
 Median is `r me`.
+
+```{r}
+modern[xs, ] |>
+  gt::gt()
+```

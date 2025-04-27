@@ -11,5 +11,5 @@ top100 <- top |>
   group_by(year) |>
   filter(row_number() <= 100) |>
   ungroup()
-
+ 
 write_csv(top100, "imdb.csv")
